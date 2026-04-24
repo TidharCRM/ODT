@@ -131,7 +131,36 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     gap: clamp(32px, 5vw, 72px);
     align-items:center;
   }
-  @media (max-width:900px){ .hero-inner{ grid-template-columns:1fr; } }
+  @media (max-width:900px){
+    .hero{ padding: 100px 0 60px; min-height:auto; display:block; }
+    .hero-inner{ grid-template-columns:1fr; text-align:center; width: min(1200px, 92vw); }
+    .hero-inner > div:first-child{ display:flex; flex-direction:column; align-items:center; }
+    .hero .eyebrow{ justify-content:center; }
+    .hero h1{ font-size: clamp(34px, 9vw, 52px); max-width: 14ch; }
+    .hero .lede{ max-width: 40ch; }
+    .hero .trust{ justify-content:center; gap: 10px 20px; font-size:13px; }
+    .hero .cta-row{ justify-content:center; }
+    .hero-collage{ margin-inline:auto; max-width: 420px; aspect-ratio: 1/1; max-height:none; }
+    .hero-collage .sticker{ right:auto; left:-2%; }
+    .section-eyebrow, .section-title, .section-sub{ text-align:center; }
+    .section-eyebrow{ justify-content:center; }
+    .section-title{ margin-inline:auto; }
+    .section-sub{ margin-inline:auto; }
+    .manifesto .lead{ margin-inline:auto; padding-right:0; padding-top:18px; text-align:center; }
+    .manifesto .lead::before{
+      top:0; right:50%; bottom:auto; left:auto;
+      transform: translateX(50%);
+      width: 48px; height: 4px;
+    }
+    .audience-grid{ margin-inline:auto; max-width: 480px; }
+    .final-cta .wrap{ padding-inline: 4vw; }
+    .faq-list{ margin-inline:auto; }
+    .foot-grid{ text-align:center; }
+    .foot-tag{ margin-inline:auto; }
+    .foot-logo img{ margin-inline:auto; }
+    .foot-bottom{ justify-content:center; text-align:center; }
+    .nav-logo > div{ display:none; }
+  }
 
   .eyebrow{
     display:inline-flex; align-items:center; gap:10px;
