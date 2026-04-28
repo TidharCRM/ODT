@@ -909,15 +909,9 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     align-items:center; justify-content:center;
     opacity:.75;
   }
-  .clients-row img{ height:44px; width:auto; filter: grayscale(1); opacity:.8; transition: filter .2s, opacity .2s;}
+  .clients-row img{ height:40px; width:auto; filter: grayscale(1); opacity:.8; transition: filter .2s, opacity .2s;}
+  @media (max-width:640px){ .clients-row{ gap:24px 36px; } .clients-row img{ height:34px; } }
   .clients-row img:hover{ filter:none; opacity:1;}
-  .client-text{
-    font-family:'FUP Begin','Rubik',sans-serif;
-    font-weight:700;
-    font-size: 18px;
-    color: var(--ink-2);
-    letter-spacing:-.01em;
-  }
 
   /* ---------- FINAL CTA ---------- */
   .final-cta{
@@ -1919,13 +1913,21 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   <div class="wrap">
     <div class="clients-head"><span>עבדנו עם</span></div>
     <div class="clients-row">
-      <img src="assets/logo-naam.webp" alt="רשת נעם צביה">
-      <img src="assets/logo-amanah.webp" alt="אולפנת אמנה">
-      <div class="client-text">שערי צדק</div>
-      <div class="client-text">LEGACY</div>
-      <div class="client-text">בה"ד 1</div>
-      <div class="client-text">בני עקיבא</div>
-      <div class="client-text">תעשיות ביטחוניות</div>
+      <img src="assets/clients/amana.webp" alt="אולפנת אמנה">
+      <img src="assets/clients/bnei-akiva.webp" alt="בני עקיבא">
+      <img src="assets/clients/carmeli.webp" alt="כרמלי">
+      <img src="assets/clients/duvdevan.webp" alt="דובדבן">
+      <img src="assets/clients/eshkol.webp" alt="אשכול">
+      <img src="assets/clients/ezra.webp" alt="עזרא">
+      <img src="assets/clients/fidf.webp" alt="FIDF">
+      <img src="assets/clients/hashomer.webp" alt="השומר">
+      <img src="assets/clients/matnas-etzion.webp" alt="מתנ״ס עציון">
+      <img src="assets/clients/mimeni.webp" alt="ממני">
+      <img src="assets/clients/neve-dekalim.webp" alt="נוה דקלים">
+      <img src="assets/clients/noam-tzvia.webp" alt="רשת נועם צביה">
+      <img src="assets/clients/ort-arad.webp" alt="אורט ערד">
+      <img src="assets/clients/shaare-zedek.webp" alt="שערי צדק">
+      <img src="assets/clients/yatka.webp" alt="יתקה">
     </div>
   </div>
 </section>
