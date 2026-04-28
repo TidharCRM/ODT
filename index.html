@@ -511,10 +511,12 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   .vtest-grid{
     margin-top: 56px;
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
   }
-  @media (max-width:900px){ .vtest-grid{ grid-template-columns:1fr; } }
+  @media (max-width:1100px){ .vtest-grid{ grid-template-columns: repeat(3, 1fr); gap:16px; } }
+  @media (max-width:780px){ .vtest-grid{ grid-template-columns: repeat(2, 1fr); gap:12px; } }
+  @media (max-width:480px){ .vtest-grid{ grid-template-columns:1fr; } }
   .vcard{
     position:relative;
     aspect-ratio: 9/14;
@@ -658,7 +660,7 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   .audience-note b{ color:var(--terra); font-weight:700; }
 
   /* ---------- GALLERY ---------- */
-  .gallery{ background: var(--ink); color:var(--paper); padding-bottom: 0; }
+  .gallery{ background: var(--ink); color:var(--paper); }
   .gallery .section-eyebrow{ color: var(--gold); }
   .gallery .section-eyebrow::before{ background: var(--gold); }
   .gallery .section-title{ color:var(--paper); }
@@ -702,28 +704,21 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   }
 
   .strip{
-    margin-top: 80px;
-    display:flex;
-    gap:14px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 0 clamp(16px, 4vw, 44px) 80px;
-    scrollbar-width: thin;
+    margin-top: 64px;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
   }
-  .strip::-webkit-scrollbar{ height:6px; }
-  .strip::-webkit-scrollbar-thumb{ background: var(--terra); border-radius:3px; }
+  @media (max-width:980px){ .strip{ grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width:640px){ .strip{ grid-template-columns: repeat(2, 1fr); gap: 10px; } }
   .strip .shot{
-    flex: 0 0 auto;
-    width: 280px;
     aspect-ratio: 3/4;
-    border-radius: 14px;
+    border-radius: 12px;
     overflow:hidden;
-    scroll-snap-align:start;
     position:relative;
   }
   .strip .shot img{ width:100%; height:100%; object-fit:cover; transition: transform .5s; }
   .strip .shot:hover img{ transform:scale(1.05); }
-  .strip .shot:nth-child(even){ transform: translateY(20px); }
 
   /* ---------- TESTIMONIALS ---------- */
   .quotes{ background: var(--paper-2); }
@@ -1214,12 +1209,10 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   .aud-card .txt h3{ transition: transform .35s cubic-bezier(.2,.8,.2,1); }
   .aud-card:hover .txt h3{ transform: translateY(-4px); }
 
-  /* Field strip: fade edges; items rise on hover */
+  /* Field gallery grid: items rise on hover */
   .gallery{ position:relative; }
-  .strip{ -webkit-mask-image: linear-gradient(to left, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(to left, transparent, #000 8%, #000 92%, transparent); }
-  .strip .shot{ transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s; box-shadow: 0 12px 30px -16px rgba(0,0,0,.6); }
-  .strip .shot:hover{ transform: translateY(-10px) scale(1.03); box-shadow: 0 24px 50px -18px rgba(0,0,0,.7); z-index:2; }
-  .strip .shot:nth-child(even):hover{ transform: translateY(10px) scale(1.03); }
+  .strip .shot{ transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s; box-shadow: 0 10px 24px -14px rgba(0,0,0,.55); }
+  .strip .shot:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 22px 44px -18px rgba(0,0,0,.7); z-index:2; }
 
   /* Video feature: glow ring around play button on hover */
   .video-feature .play-btn{ position:relative; }
@@ -1333,7 +1326,6 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     .hero::after{ left:-100px; bottom:-140px; }
     .quotes-grid{ columns: 1; }
     .deco-dot{ display:none; }
-    .strip{ padding-inline: 4vw; }
   }
 </style>
 </head>
@@ -1546,15 +1538,17 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     </div>
   </div>
 
-  <div class="strip">
-    <div class="shot"><img src="assets/girls-bridge.jpeg" alt=""></div>
-    <div class="shot"><img src="assets/hero-hoop.jpeg" alt=""></div>
-    <div class="shot"><img src="assets/army-handcuffs.jpeg" alt=""></div>
-    <div class="shot"><img src="assets/forest-walk.jpeg" alt=""></div>
-    <div class="shot"><img src="assets/chair-rope.jpeg" alt=""></div>
-    <div class="shot"><img src="assets/archery-targets.jpeg" alt=""></div>
-    <div class="shot"><img src="assets/archery-shoot.jpeg" alt=""></div>
-    <div class="shot"><img src="assets/numbers-grass.jpeg" alt=""></div>
+  <div class="wrap">
+    <div class="strip">
+      <div class="shot"><img src="assets/girls-bridge.jpeg" alt=""></div>
+      <div class="shot"><img src="assets/hero-hoop.jpeg" alt=""></div>
+      <div class="shot"><img src="assets/army-handcuffs.jpeg" alt=""></div>
+      <div class="shot"><img src="assets/forest-walk.jpeg" alt=""></div>
+      <div class="shot"><img src="assets/chair-rope.jpeg" alt=""></div>
+      <div class="shot"><img src="assets/archery-targets.jpeg" alt=""></div>
+      <div class="shot"><img src="assets/archery-shoot.jpeg" alt=""></div>
+      <div class="shot"><img src="assets/numbers-grass.jpeg" alt=""></div>
+    </div>
   </div>
 </section>
 
@@ -1571,51 +1565,108 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     </p>
 
     <div class="vtest-grid">
-      <!-- VIDEO CARD 1: ARMY -->
-      <div class="vcard" data-reveal data-video="" data-poster="assets/army-circle.jpeg">
-        <img src="assets/army-circle.jpeg" alt="המלצת לוחם">
+      <div class="vcard" data-reveal data-video="assets/videos/rec-1.mp4">
+        <img src="assets/army-circle.jpeg" alt="המלצה 1">
         <div class="veil"></div>
-        <div class="vchip">צה"ל</div>
+        <div class="vchip">המלצה</div>
         <div class="vplay">
           <div class="vplay-btn">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </div>
         </div>
         <div class="vmeta">
-          <div class="vname">המלצת מפקד</div>
-          <div class="vrole">לאחר יום גיבוש לוחמים</div>
+          <div class="vname">המלצה מהשטח</div>
+          <div class="vrole">לחצו לצפייה</div>
         </div>
       </div>
 
-      <!-- VIDEO CARD 2: EDUCATION -->
-      <div class="vcard" data-reveal data-video="" data-poster="assets/girls-bridge.jpeg">
-        <img src="assets/girls-bridge.jpeg" alt="המלצת מחנכת">
+      <div class="vcard" data-reveal data-video="assets/videos/rec-2.mp4">
+        <img src="assets/girls-bridge.jpeg" alt="המלצה 2">
         <div class="veil"></div>
-        <div class="vchip">חינוך</div>
+        <div class="vchip">המלצה</div>
         <div class="vplay">
           <div class="vplay-btn">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </div>
         </div>
         <div class="vmeta">
-          <div class="vname">המלצת מחנכת</div>
-          <div class="vrole">סדנת ערב בטיול שנתי</div>
+          <div class="vname">המלצה מהשטח</div>
+          <div class="vrole">לחצו לצפייה</div>
         </div>
       </div>
 
-      <!-- VIDEO CARD 3: CORPORATE -->
-      <div class="vcard" data-reveal data-video="" data-poster="assets/adults-sticks.jpeg">
-        <img src="assets/adults-sticks.jpeg" alt="המלצת מנהל">
+      <div class="vcard" data-reveal data-video="assets/videos/rec-3.mp4">
+        <img src="assets/adults-sticks.jpeg" alt="המלצה 3">
         <div class="veil"></div>
-        <div class="vchip">חברות</div>
+        <div class="vchip">המלצה</div>
         <div class="vplay">
           <div class="vplay-btn">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </div>
         </div>
         <div class="vmeta">
-          <div class="vname">המלצת מנהל צוות</div>
-          <div class="vrole">יום גיבוש לצוות פיתוח</div>
+          <div class="vname">המלצה מהשטח</div>
+          <div class="vrole">לחצו לצפייה</div>
+        </div>
+      </div>
+
+      <div class="vcard" data-reveal data-video="assets/videos/rec-4.mp4">
+        <img src="assets/army-men-circle.jpeg" alt="המלצה 4">
+        <div class="veil"></div>
+        <div class="vchip">המלצה</div>
+        <div class="vplay">
+          <div class="vplay-btn">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="vmeta">
+          <div class="vname">המלצה מהשטח</div>
+          <div class="vrole">לחצו לצפייה</div>
+        </div>
+      </div>
+
+      <div class="vcard" data-reveal data-video="assets/videos/rec-5.mp4">
+        <img src="assets/army-handcuffs.jpeg" alt="המלצה 5">
+        <div class="veil"></div>
+        <div class="vchip">המלצה</div>
+        <div class="vplay">
+          <div class="vplay-btn">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="vmeta">
+          <div class="vname">המלצה מהשטח</div>
+          <div class="vrole">לחצו לצפייה</div>
+        </div>
+      </div>
+
+      <div class="vcard" data-reveal data-video="assets/videos/rec-6.mp4">
+        <img src="assets/girls-sticks.jpeg" alt="המלצה 6">
+        <div class="veil"></div>
+        <div class="vchip">המלצה</div>
+        <div class="vplay">
+          <div class="vplay-btn">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="vmeta">
+          <div class="vname">המלצה מהשטח</div>
+          <div class="vrole">לחצו לצפייה</div>
+        </div>
+      </div>
+
+      <div class="vcard" data-reveal data-video="assets/videos/rec-7.mp4">
+        <img src="assets/chair-rope.jpeg" alt="המלצה 7">
+        <div class="veil"></div>
+        <div class="vchip">המלצה</div>
+        <div class="vplay">
+          <div class="vplay-btn">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="vmeta">
+          <div class="vname">המלצה מהשטח</div>
+          <div class="vrole">לחצו לצפייה</div>
         </div>
       </div>
     </div>
