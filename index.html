@@ -147,8 +147,8 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     .hero .lede{ max-width: 40ch; }
     .hero .trust{ justify-content:center; gap: 10px 20px; font-size:13px; }
     .hero .cta-row{ justify-content:center; }
-    .hero-collage{ margin-inline:auto; max-width: 420px; aspect-ratio: 1/1; max-height:none; }
-    .hero-collage .sticker{ right:auto; left:-2%; }
+    /* Hide hero collage on mobile — big logo serves as the visual anchor and the photos repeat in #field anyway. */
+    .hero-collage{ display:none; }
     .section-eyebrow, .section-title, .section-sub{ text-align:center; }
     .section-eyebrow{ justify-content:center; }
     .section-title{ margin-inline:auto; }
