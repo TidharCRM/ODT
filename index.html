@@ -45,6 +45,7 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   }
   *,*::before,*::after{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; }
+  html{ overflow-x: clip; }
   body{
     font-family:'FUP Gilad', 'Assistant', system-ui, sans-serif;
     background:var(--paper);
@@ -52,8 +53,13 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     font-size:17px;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
+    overflow-x: clip;
+    width:100%;
+    max-width:100vw;
+    position:relative;
   }
+  main{ overflow-x: clip; }
+  section{ contain: paint; }
   h1,h2,h3,h4{
     font-family:'FUP Begin', 'Rubik', sans-serif;
     font-weight:800;
@@ -132,10 +138,11 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     align-items:center;
   }
   @media (max-width:900px){
-    .hero{ padding: 100px 0 60px; min-height:auto; display:block; }
+    .hero{ padding: 92px 0 60px; min-height:auto; display:block; }
     .hero-inner{ grid-template-columns:1fr; text-align:center; width: min(1200px, 92vw); }
     .hero-inner > div:first-child{ display:flex; flex-direction:column; align-items:center; }
-    .hero .eyebrow{ justify-content:center; }
+    .hero-logo{ display:block; margin-bottom: 18px; }
+    .hero .eyebrow{ justify-content:center; margin-bottom: 16px; font-size:12px; }
     .hero h1{ font-size: clamp(34px, 9vw, 52px); max-width: 14ch; }
     .hero .lede{ max-width: 40ch; }
     .hero .trust{ justify-content:center; gap: 10px 20px; font-size:13px; }
@@ -160,6 +167,22 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     .foot-logo img{ margin-inline:auto; }
     .foot-bottom{ justify-content:center; text-align:center; }
     .nav-logo > div{ display:none; }
+    nav.topnav:not(.scrolled) .nav-logo img{ opacity:0; transition: opacity .25s; }
+    nav.topnav.scrolled .nav-logo img{ opacity:1; }
+  }
+
+  /* Hero logo — hidden on desktop (already in nav), large on mobile */
+  .hero-logo{
+    display:none;
+    width: clamp(160px, 46vw, 220px);
+    height:auto;
+    margin: 0 auto 22px;
+    filter: drop-shadow(0 8px 22px rgba(42,27,18,.18));
+    animation: heroLogoIn .9s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes heroLogoIn{
+    from{ opacity:0; transform: translateY(-12px) scale(.94); }
+    to{ opacity:1; transform:none; }
   }
 
   .eyebrow{
@@ -384,6 +407,174 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     font-size:16px;
     line-height:1.55;
   }
+
+  /* ---------- ABOUT / WHO WE ARE ---------- */
+  .about{ background: var(--paper); }
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(36px, 6vw, 80px);
+    align-items:center;
+    margin-top: 56px;
+  }
+  @media (max-width:900px){ .about-grid{ grid-template-columns:1fr; text-align:center; } }
+  .about-photos{
+    position:relative;
+    aspect-ratio: 1/1;
+    max-width: 520px;
+    margin-inline:auto;
+  }
+  .about-photos .ap{
+    position:absolute;
+    border-radius: 14px;
+    overflow:hidden;
+    background:#fff;
+    padding: 7px;
+    box-shadow: 0 24px 50px -22px rgba(42,27,18,.35), 0 2px 8px rgba(42,27,18,.1);
+  }
+  .about-photos .ap img{ width:100%; height:100%; object-fit:cover; border-radius:8px; }
+  .about-photos .ap-1{ inset: 0 22% 22% 0; transform: rotate(-3deg); z-index:2; }
+  .about-photos .ap-2{ width:54%; aspect-ratio:1/1; bottom:0; left:0; transform: rotate(4deg); z-index:3; }
+  .about-photos .badge{
+    position:absolute; z-index:4;
+    bottom: 6%; right:-4%;
+    background: var(--terra);
+    color:#fff;
+    font-family:'FUP Begin','Rubik',sans-serif;
+    font-weight:700;
+    padding: 14px 22px;
+    border-radius: 999px;
+    box-shadow: 0 14px 30px -8px rgba(158,78,44,.55);
+    transform: rotate(-6deg);
+    font-size:14px;
+    letter-spacing:.04em;
+  }
+  @media (max-width:900px){ .about-photos .badge{ right:auto; left:-2%; } }
+  .about-text .lead-line{
+    font-family:'FUP Begin','Rubik',sans-serif;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height:1.3;
+    font-weight:600;
+    color:var(--ink);
+    margin: 26px 0 18px;
+  }
+  .about-text .lead-line em{
+    font-style:normal; color: var(--terra);
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:1.15em;
+  }
+  .about-text p{
+    color:var(--ink-2);
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+    max-width: 56ch;
+  }
+  @media (max-width:900px){ .about-text p{ margin-inline:auto; } }
+  .signature{
+    margin-top: 26px;
+    display:flex; align-items:center; gap: 16px;
+    font-family:'Caveat', cursive;
+    font-size: 30px;
+    color: var(--terra);
+    line-height:1;
+  }
+  @media (max-width:900px){ .signature{ justify-content:center; } }
+  .signature::before{
+    content:'';
+    width: 56px; height:2px; background: var(--terra);
+    border-radius: 2px;
+  }
+
+  /* ---------- VIDEO TESTIMONIALS ---------- */
+  .vtest{ background: var(--cream); }
+  .vtest-grid{
+    margin-top: 56px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  @media (max-width:900px){ .vtest-grid{ grid-template-columns:1fr; } }
+  .vcard{
+    position:relative;
+    aspect-ratio: 9/14;
+    border-radius: 18px;
+    overflow:hidden;
+    background: var(--ink-2);
+    cursor:pointer;
+    box-shadow: 0 24px 50px -22px rgba(42,27,18,.35);
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+  }
+  .vcard:hover{ transform: translateY(-6px); box-shadow: 0 30px 60px -22px rgba(42,27,18,.45); }
+  .vcard > img,
+  .vcard video,
+  .vcard iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover;
+    border:0;
+  }
+  .vcard > img{ opacity:.78; transition: opacity .4s, transform .6s; }
+  .vcard:hover > img{ opacity:.92; transform: scale(1.03); }
+  .vcard .veil{
+    position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(20,12,8,.85) 0%, rgba(20,12,8,.25) 50%, rgba(20,12,8,0) 75%);
+  }
+  .vcard .vplay{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .vcard .vplay-btn{
+    width: 68px; height:68px;
+    border-radius:50%;
+    background: var(--paper);
+    color: var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 16px 30px -8px rgba(0,0,0,.5);
+    transition: transform .3s;
+    position:relative;
+  }
+  .vcard:hover .vplay-btn{ transform: scale(1.1); }
+  .vcard .vplay-btn svg{ margin-right:-3px; }
+  .vcard .vplay-btn::after{
+    content:''; position:absolute; inset:-12px;
+    border-radius:50%;
+    box-shadow: 0 0 0 0 rgba(245,237,225,.45);
+    animation: stickerRing 2.8s ease-out infinite;
+    pointer-events:none;
+  }
+  .vcard .vmeta{
+    position:absolute; inset: auto 18px 18px 18px;
+    color:#fff;
+  }
+  .vcard .vname{
+    font-family:'FUP Begin','Rubik',sans-serif;
+    font-weight:700; font-size: 17px;
+    margin-bottom: 4px;
+  }
+  .vcard .vrole{
+    font-size: 13px;
+    color: rgba(255,255,255,.78);
+    line-height: 1.4;
+  }
+  .vcard .vchip{
+    position:absolute; top:14px; right:14px;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(8px);
+    color: var(--terra-deep);
+    font-size: 10px;
+    font-weight:700;
+    letter-spacing:.15em;
+    padding: 5px 11px;
+    border-radius: 999px;
+    text-transform:uppercase;
+  }
+  .vcard.is-playing .vplay,
+  .vcard.is-playing .veil,
+  .vcard.is-playing .vmeta,
+  .vcard.is-playing .vchip,
+  .vcard.is-playing > img{ display:none; }
 
   /* ---------- AUDIENCE ---------- */
   .audience{ background: var(--paper); }
@@ -1110,6 +1301,21 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
       transition-duration: .01ms !important;
     }
   }
+
+  /* Mobile: kill rotations & off-canvas decorations that caused horizontal lean */
+  @media (max-width: 820px){
+    .quote-card,
+    .quote-card:nth-child(3n+1),
+    .quote-card:nth-child(3n+2),
+    .quote-card:nth-child(3n+3){ transform: none; }
+    .quote-card:hover{ transform: translateY(-4px); }
+    .hero .scrib-bg{ display:none; }
+    .hero::before{ right:-160px; top:-160px; }
+    .hero::after{ left:-100px; bottom:-140px; }
+    .quotes-grid{ columns: 1; }
+    .deco-dot{ display:none; }
+    .strip{ padding-inline: 4vw; }
+  }
 </style>
 </head>
 <body data-accent="terracotta" data-hero="photo-full">
@@ -1124,11 +1330,11 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     </div>
   </a>
   <div class="nav-links">
+    <a href="#about">מי אנחנו</a>
     <a href="#what">מה זה ODT</a>
     <a href="#who">למי זה מתאים</a>
     <a href="#field">מהשטח</a>
     <a href="#words">המלצות</a>
-    <a href="#how">איך זה עובד</a>
     <a href="#faq">שאלות</a>
   </div>
   <a href="https://wa.me/972528990156?text=שלום,%20אשמח%20לשמוע%20עוד%20על%20הסדנאות" class="nav-cta" target="_blank">
@@ -1146,6 +1352,7 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   </svg>
   <div class="wrap hero-inner">
     <div>
+      <img class="hero-logo" src="assets/logo-dark.webp" alt="בשביל הלב" data-reveal>
       <div class="eyebrow" data-reveal>סדנאות ODT · בשביל הלב</div>
       <h1 data-reveal>
         לא עוד יום גיבוש<br/>
@@ -1159,6 +1366,7 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
       <div class="trust" data-reveal>
         <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> מעל 500 קבוצות</span>
         <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> מנחים בהכשרה מקצועית</span>
+        <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> מגיעים לכל מקום בארץ</span>
         <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> התאמה אישית לכל ארגון</span>
       </div>
       <div class="cta-row" data-reveal>
@@ -1178,6 +1386,39 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
       <div class="frame hc-acc1"><img src="assets/hero-hoop.jpeg" alt=""></div>
       <div class="frame hc-acc2"><img src="assets/numbers-grass.jpeg" alt=""></div>
       <div class="sticker"><b data-count="500" data-suffix="+">0+</b><em>קבוצות</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / WHO WE ARE -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="section-eyebrow" data-reveal>מי אנחנו</div>
+    <h2 class="section-title" data-reveal>
+      יאיר ואביתר —<br/>
+      ושאר הצוות שעומד מאחורי "בשביל הלב".
+    </h2>
+
+    <div class="about-grid">
+      <div class="about-photos" data-reveal>
+        <div class="ap ap-1"><img src="assets/numbers-grass.jpeg" alt="פעילות עם הצוות"></div>
+        <div class="ap ap-2"><img src="assets/forest-walk.jpeg" alt="הליכה משותפת"></div>
+        <div class="badge">צוות מנחים שמגיע עם הלב</div>
+      </div>
+
+      <div class="about-text" data-reveal>
+        <p class="lead-line">
+          האמנו תמיד שיש דרך אחרת —<br/>
+          כזו שעוברת <em>דרך הלב.</em>
+        </p>
+        <p>
+          "בשביל הלב" נולד מתוך אמונה שבכל קבוצה — צוות עבודה, יחידה צבאית, כיתה או משפחה — מסתתרים רגעים של חיבור אמיתי שמחכים שמישהו יעזור להם לצוף. בנינו צוות מנחים מנוסה, שמגיע מעולמות החינוך, הצבא והדרכת קבוצות, עם הכשרה מקצועית ולב פתוח.
+        </p>
+        <p>
+          לאורך השנים ליווינו מאות יחידות צה"ל, צוותי הייטק וביטחון, בתי ספר, תנועות נוער, משפחות ואירועים. בכל פעילות אנחנו מקפידים על אותו עיקרון: לקרוא את הקבוצה, להתאים את הפעילות לצרכים שלה, ולסיים בעיבוד שמחבר את החוויה לחיים.
+        </p>
+        <div class="signature">בשביל הלב — בדיוק.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1225,7 +1466,7 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
 
     <div class="audience-grid">
       <a class="aud-card" data-reveal href="https://wa.me/972528990156?text=שלום,%20מעוניינים%20ביום%20גיבוש%20לארגון" target="_blank">
-        <img src="assets/adults-sticks.jpeg" alt="">
+        <img src="assets/numbers-grass.jpeg" alt="">
         <div class="veil"></div>
         <div class="chip">ארגונים</div>
         <div class="txt">
@@ -1275,13 +1516,13 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     <h2 class="section-title" data-reveal>ככה זה נראה באמת.</h2>
     <p class="section-sub" data-reveal>בלי סטוק, בלי בימוי. הפרצופים, הצחוק, הרגעים של חיבור אמיתי.</p>
 
-    <div class="video-feature" data-reveal onclick="this.querySelector('.play').style.display='none'; this.insertAdjacentHTML('beforeend','<div style=\'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:Rubik;font-size:14px;opacity:.7\'>וידאו יועלה כאן · שלחו הודעה לדוגמאות</div>');">
-      <img src="assets/army-men-circle.jpeg" alt="">
+    <div class="video-feature" id="armyFeature" data-reveal data-video="" data-poster="assets/army-men-circle.jpeg">
+      <img src="assets/army-men-circle.jpeg" alt="טעימה מהשטח — סרטון צבא">
       <div class="play">
         <div class="play-btn">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
         </div>
-        <span>צפו בטעימה</span>
+        <span>צפו בטעימה מהשטח</span>
       </div>
     </div>
   </div>
@@ -1295,6 +1536,77 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     <div class="shot"><img src="assets/archery-targets.jpeg" alt=""></div>
     <div class="shot"><img src="assets/archery-shoot.jpeg" alt=""></div>
     <div class="shot"><img src="assets/numbers-grass.jpeg" alt=""></div>
+  </div>
+</section>
+
+<!-- VIDEO TESTIMONIALS -->
+<section class="vtest" id="videos">
+  <div class="wrap">
+    <div class="section-eyebrow" data-reveal>סרטוני המלצות</div>
+    <h2 class="section-title" data-reveal>
+      מה אומרים עלינו —<br/>
+      במילים שלהם, מול המצלמה.
+    </h2>
+    <p class="section-sub" data-reveal>
+      סרטונים אמיתיים מהשטח, מאנשים שהיו שם וחזרו עם משהו שלא חשבו שהם יחזרו איתו.
+    </p>
+
+    <div class="vtest-grid">
+      <!-- VIDEO CARD 1: ARMY -->
+      <div class="vcard" data-reveal data-video="" data-poster="assets/army-circle.jpeg">
+        <img src="assets/army-circle.jpeg" alt="המלצת לוחם">
+        <div class="veil"></div>
+        <div class="vchip">צה"ל</div>
+        <div class="vplay">
+          <div class="vplay-btn">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="vmeta">
+          <div class="vname">המלצת מפקד</div>
+          <div class="vrole">לאחר יום גיבוש לוחמים</div>
+        </div>
+      </div>
+
+      <!-- VIDEO CARD 2: EDUCATION -->
+      <div class="vcard" data-reveal data-video="" data-poster="assets/girls-bridge.jpeg">
+        <img src="assets/girls-bridge.jpeg" alt="המלצת מחנכת">
+        <div class="veil"></div>
+        <div class="vchip">חינוך</div>
+        <div class="vplay">
+          <div class="vplay-btn">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="vmeta">
+          <div class="vname">המלצת מחנכת</div>
+          <div class="vrole">סדנת ערב בטיול שנתי</div>
+        </div>
+      </div>
+
+      <!-- VIDEO CARD 3: CORPORATE -->
+      <div class="vcard" data-reveal data-video="" data-poster="assets/adults-sticks.jpeg">
+        <img src="assets/adults-sticks.jpeg" alt="המלצת מנהל">
+        <div class="veil"></div>
+        <div class="vchip">חברות</div>
+        <div class="vplay">
+          <div class="vplay-btn">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="vmeta">
+          <div class="vname">המלצת מנהל צוות</div>
+          <div class="vrole">יום גיבוש לצוות פיתוח</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px; text-align:center;" data-reveal>
+      <a href="https://wa.me/972528990156?text=שלום,%20אשמח%20לראות%20עוד%20סרטוני%20המלצות" target="_blank" class="btn-ghost" style="display:inline-flex">
+        רוצים לראות עוד סרטונים?
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1706,6 +2018,61 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   if (!TWEAKS.showFloatingWhatsapp) {
     document.getElementById('floatWa').style.display = 'none';
   }
+
+  // ----- VIDEO PLAYER (works for YouTube URLs, Vimeo, or local mp4) -----
+  // To enable a card: set data-video="<URL>" on the card.
+  //   YouTube example: data-video="https://www.youtube.com/watch?v=XXXX"
+  //   MP4 example:     data-video="assets/videos/army.mp4"
+  function youTubeId(url){
+    if(!url) return null;
+    const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/);
+    return m ? m[1] : null;
+  }
+  function buildVideoEl(url){
+    const yt = youTubeId(url);
+    if (yt){
+      const f = document.createElement('iframe');
+      f.src = `https://www.youtube.com/embed/${yt}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      f.allow = 'autoplay; encrypted-media; picture-in-picture';
+      f.allowFullscreen = true;
+      f.setAttribute('frameborder','0');
+      return f;
+    }
+    if (/vimeo\.com\/(\d+)/.test(url)){
+      const id = url.match(/vimeo\.com\/(\d+)/)[1];
+      const f = document.createElement('iframe');
+      f.src = `https://player.vimeo.com/video/${id}?autoplay=1`;
+      f.allow = 'autoplay; fullscreen; picture-in-picture';
+      f.allowFullscreen = true;
+      f.setAttribute('frameborder','0');
+      return f;
+    }
+    const v = document.createElement('video');
+    v.src = url;
+    v.controls = true;
+    v.autoplay = true;
+    v.playsInline = true;
+    return v;
+  }
+  function activateVideo(card){
+    const url = card.dataset.video && card.dataset.video.trim();
+    if (!url){
+      // No video URL set yet: show a friendly placeholder
+      if (card.querySelector('.v-placeholder')) return;
+      const ph = document.createElement('div');
+      ph.className = 'v-placeholder';
+      ph.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;color:#fff;font-family:FUP Begin,Rubik,sans-serif;font-size:14px;background:rgba(20,12,8,.7);z-index:5;line-height:1.5';
+      ph.innerHTML = 'הסרטון יועלה בקרוב.<br/><span style="opacity:.75;font-size:12px;display:block;margin-top:8px">לצפייה בעוד דוגמאות, שלחו לנו הודעה.</span>';
+      card.appendChild(ph);
+      return;
+    }
+    card.classList.add('is-playing');
+    const el = buildVideoEl(url);
+    card.appendChild(el);
+  }
+  document.querySelectorAll('.vcard, .video-feature').forEach(card=>{
+    card.addEventListener('click', ()=> activateVideo(card));
+  });
 </script>
 
 </body>
